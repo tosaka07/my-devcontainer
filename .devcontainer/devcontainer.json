@@ -1,0 +1,56 @@
+{
+  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/refs/heads/main/schemas/devContainer.schema.json",
+  "name": "A Development Container for Vibe-coding",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "remoteUser": "vscode",
+  "remoteEnv": {
+    "PATH": "${containerEnv:PATH}:/mnt/mise-data/shims"
+  },
+  "containerUser": "vscode",
+  "containerEnv": {
+    "MISE_DATA_DIR": "/mnt/mise-data",
+    "TZ": "Asia/Tokyo",
+    "LANG": "ja_JP.UTF-8",
+    "LANGUAGE": "ja_JP:ja",
+    "LC_ALL": "ja_JP.UTF-8"
+  },
+  "mounts": [
+    {
+      "source": "mise-data-volume",
+      "target": "/mnt/mise-data",
+      "type": "volume"
+    },
+    {
+      "source": "atuin-data-volume",
+      "target": "/home/vscode/.local/share/atuin",
+      "type": "volume"
+    },
+    {
+      "source": "${localWorkspaceFolder}/.devcontainer/mise.toml",
+      "target": "/home/vscode/.mise.toml",
+      "type": "bind"
+    },
+    {
+      "source": "${localWorkspaceFolder}/.devcontainer/bash/.bashrc",
+      "target": "/home/vscode/.bashrc",
+      "type": "bind"
+    }
+  ],
+  "features": {
+    "ghcr.io/devcontainers-extra/features/mise:1": {},
+    "./.devcontainer/features/ble-sh": {
+      "ref": "v0.4.0",
+      "username": "vscode"
+    },
+    "./.devcontainer/features/bash-it": {
+      "ref": "master",
+      "username": "vscode"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["hverlin.mise-vscode"]
+    }
+  },
+  "postCreateCommand": "sudo chown -R vscode:vscode /mnt/mise-data /home/vscode/.local/share/atuin || true"
+}

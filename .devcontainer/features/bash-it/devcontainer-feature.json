@@ -1,0 +1,22 @@
+{
+  "id": "bash-it",
+  "version": "0.1.0",
+  "name": "Bash-it",
+  "description": "Clone Bash-it into the specified user's home without enabling or modifying shell configs.",
+  "options": {
+    "ref": {
+      "type": "string",
+      "default": "master",
+      "description": "Git branch/tag/commit for Bash-it"
+    },
+    "username": {
+      "type": "string",
+      "default": "vscode",
+      "description": "Target username to install into (no activation)"
+    }
+  },
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils"
+  ]
+}
+

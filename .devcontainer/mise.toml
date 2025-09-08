@@ -1,0 +1,20 @@
+[env]
+DISABLE_AUTOUPDATER = 1
+
+[settings]
+experimental = true
+
+[tools]
+node = "lts"
+python = "latest"
+uv = "latest"
+fzf = "latest"
+ripgrep = "latest"
+rust = "latest"
+starship = "latest"
+atuin = "latest"
+"npm:@anthropic-ai/claude-code" = "latest"
+"npm:@google/gemini-cli" = "latest"
+"npm:@openai/codex" = "latest"
+"npm:ccusage" = "latest"
+"cargo:sheldon" = "latest"

@@ -49,9 +49,11 @@ devcontainer up \
 
 ### 🛠️ mise - ツール管理とキャッシュ
 
-共通ライブラリを mise で管理し、named volume でキャッシュを共有。設定ファイルは bind mount されるため、コマンド実行時も自動同期されます。
+共通ライブラリを mise で管理し、named volume でキャッシュを共有。プロジェクトが既に `mise.toml` でツール管理している場合は、`mise install` だけで必要なツールがすべて自動インストールされます。
 
-- **設定ファイル**: `.devcontainer/mise/config.toml` (グローバル), `mise.toml` (プロジェクト)
+- **設定ファイル**: 
+  - `.devcontainer/mise/config.toml`: グローバルツール（fzf, ripgrep, rust, starship, atuin など）
+  - `mise.toml`: プロジェクト固有のツール（既存プロジェクトの場合はそのまま利用可能）
 - **ツール追加**:
   ```bash
   # グローバルツールの追加

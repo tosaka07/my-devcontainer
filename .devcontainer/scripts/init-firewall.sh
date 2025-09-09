@@ -69,7 +69,10 @@ for domain in \
   "oauth2.googleapis.com" \
   "${GOOGLE_CLOUD_LOCATION}-aiplatform.googleapis.com" \
   "registry.npmjs.org" \
+  "pypi.org" \
   "api.anthropic.com" \
+  "auth.openai.com" \
+  "chatgpt.com" \
   "marketplace.visualstudio.com" \
   "vscode.blob.core.windows.net" \
   "update.code.visualstudio.com"; do

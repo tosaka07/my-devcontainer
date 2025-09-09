@@ -46,8 +46,8 @@ RUN install -d -o "${USERNAME}" -g "${USERNAME}" \
   "${XDG_STATE_HOME:-/home/${USERNAME}/.local/state}" \
   "${XDG_DATA_HOME:-/home/${USERNAME}/.local/share}" \
   "${XDG_CONFIG_HOME:-/home/${USERNAME}/.config}" \
-  && mkdir -p /home/${USERNAME} /mnt/mise-data ${XDG_DATA_HOME}/atuin ${XDG_DATA_HOME}/sheldon ${XDG_CONFIG_HOME}/gh ${XDG_CONFIG_HOME}/gcloud /home/${USERNAME}/.claude \
-  && chown -R ${USERNAME}:${USERNAME} /home/${USERNAME} /mnt/mise-data ${XDG_DATA_HOME}/atuin ${XDG_DATA_HOME}/sheldon ${XDG_CONFIG_HOME}/gh ${XDG_CONFIG_HOME}/gcloud /home/${USERNAME}/.claude
+  && mkdir -p /home/${USERNAME} /mnt/mise-data ${XDG_DATA_HOME}/atuin ${XDG_DATA_HOME}/sheldon ${XDG_CONFIG_HOME}/gh ${XDG_CONFIG_HOME}/gcloud /home/${USERNAME}/.claude /home/${USERNAME}/.codex \
+  && chown -R ${USERNAME}:${USERNAME} /home/${USERNAME} /mnt/mise-data ${XDG_DATA_HOME}/atuin ${XDG_DATA_HOME}/sheldon ${XDG_CONFIG_HOME}/gh ${XDG_CONFIG_HOME}/gcloud /home/${USERNAME}/.claude /home/${USERNAME}/.codex
 
 USER ${USERNAME}
 

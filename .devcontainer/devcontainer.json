@@ -88,7 +88,9 @@
   "features": {},
   "customizations": {
     "vscode": {
-      "extensions": ["hverlin.mise-vscode"],
+      "extensions": [
+        "hverlin.mise-vscode"
+      ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "zsh",
         "terminal.integrated.profiles.linux": {
@@ -101,11 +103,11 @@
   },
   "postCreateCommand": {
     "mise-install": "bash .devcontainer/scripts/mise-install.sh",
-    "ssh-agent": "bash .devcontainer/scripts/setup-ssh-agent.sh"
+    "ssh-agent": "bash .devcontainer/scripts/setup-ssh-agent.sh",
+    "install-mcp": "bash .devcontainer/scripts/install-mcp.sh"
   },
   "postStartCommand": {
     "init-firewall": "sudo /usr/local/bin/init-firewall.sh"
   },
   "waitFor": "postStartCommand"
 }
-

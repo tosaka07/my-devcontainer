@@ -55,6 +55,11 @@
       "type": "volume"
     },
     {
+      "source": "${localEnv:HOME}/.claude",
+      "target": "/host-claude",
+      "type": "bind"
+    },
+    {
       "source": "mise-data-volume",
       "target": "/mnt/mise-data",
       "type": "volume"
@@ -107,7 +112,8 @@
     "install-mcp": "bash .devcontainer/scripts/install-mcp.sh"
   },
   "postStartCommand": {
-    "init-firewall": "sudo /usr/local/bin/init-firewall.sh"
+    "init-firewall": "sudo /usr/local/bin/init-firewall.sh",
+    "sync-claude": "bash .devcontainer/scripts/sync-claude-config.sh"
   },
   "waitFor": "postStartCommand"
 }

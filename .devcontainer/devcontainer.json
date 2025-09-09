@@ -60,6 +60,11 @@
       "type": "bind"
     },
     {
+      "source": "${localEnv:HOME}/.codex",
+      "target": "/host-codex",
+      "type": "bind"
+    },
+    {
       "source": "mise-data-volume",
       "target": "/mnt/mise-data",
       "type": "volume"
@@ -113,7 +118,8 @@
   },
   "postStartCommand": {
     "init-firewall": "sudo /usr/local/bin/init-firewall.sh",
-    "sync-claude": "bash .devcontainer/scripts/sync-claude-config.sh"
+    "sync-claude": "bash .devcontainer/scripts/sync-claude-config.sh",
+    "sync-codex": "bash .devcontainer/scripts/sync-codex-config.sh"
   },
   "waitFor": "postStartCommand"
 }

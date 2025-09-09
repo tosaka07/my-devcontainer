@@ -1,7 +1,23 @@
 {
   "$schema": "https://raw.githubusercontent.com/devcontainers/spec/refs/heads/main/schemas/devContainer.schema.json",
   "name": "A Development Container for Vibe-coding",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "USERNAME": "vscode",
+      "WORK_DIR": "${containerWorkspaceFolder}"
+    }
+  },
+  "runArgs": [
+    "--cap-add=NET_ADMIN",
+    "-v",
+    "/run/host-services/ssh-auth.sock:/home/vscode/agent.sock",
+    "-e",
+    "SSH_AUTH_SOCK=/home/vscode/agent.sock",
+    "--env-file",
+    ".devcontainer/devcontainer.env"
+  ],
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "remoteUser": "vscode",
   "remoteEnv": {
     "PATH": "${containerEnv:PATH}:/mnt/mise-data/shims"
@@ -9,12 +25,35 @@
   "containerUser": "vscode",
   "containerEnv": {
     "MISE_DATA_DIR": "/mnt/mise-data",
-    "TZ": "Asia/Tokyo",
-    "LANG": "ja_JP.UTF-8",
-    "LANGUAGE": "ja_JP:ja",
-    "LC_ALL": "ja_JP.UTF-8"
+    "MISE_CONFIG_DIR": "/home/vscode/.config/mise",
+    "XDG_STATE_HOME": "/home/vscode/.local/state",
+    "XDG_DATA_HOME": "/home/vscode/.local/share",
+    "XDG_CONFIG_HOME": "/home/vscode/.config",
+    "MISE_TRUSTED_CONFIG_PATHS": "${containerWorkspaceFolder}",
+    "CLAUDE_CONFIG_DIR": "/home/vscode/.claude",
+    "NODE_OPTIONS": "--max-old-space-size=4096"
   },
   "mounts": [
+    {
+      "source": "gh-config",
+      "target": "/home/vscode/.config/gh",
+      "type": "volume"
+    },
+    {
+      "source": "codex-config",
+      "target": "/home/vscode/.codex",
+      "type": "volume"
+    },
+    {
+      "source": "gcloud-config",
+      "target": "/home/vscode/.config/gcloud",
+      "type": "volume"
+    },
+    {
+      "source": "claude-code-config",
+      "target": "/home/vscode/.claude",
+      "type": "volume"
+    },
     {
       "source": "mise-data-volume",
       "target": "/mnt/mise-data",
@@ -26,31 +65,47 @@
       "type": "volume"
     },
     {
-      "source": "${localWorkspaceFolder}/.devcontainer/mise.toml",
-      "target": "/home/vscode/.mise.toml",
+      "source": "sheldon-data-volume",
+      "target": "/home/vscode/.local/share/sheldon",
+      "type": "volume"
+    },
+    {
+      "source": "${localWorkspaceFolder}/.devcontainer/mise/config.toml",
+      "target": "/home/vscode/.config/mise/config.toml",
       "type": "bind"
     },
     {
-      "source": "${localWorkspaceFolder}/.devcontainer/bash/.bashrc",
-      "target": "/home/vscode/.bashrc",
+      "source": "${localWorkspaceFolder}/.devcontainer/zsh/.zshrc",
+      "target": "/home/vscode/.zshrc",
+      "type": "bind"
+    },
+    {
+      "source": "${localWorkspaceFolder}/.devcontainer/sheldon/plugins.toml",
+      "target": "/home/vscode/.config/sheldon/plugins.toml",
       "type": "bind"
     }
   ],
-  "features": {
-    "ghcr.io/devcontainers-extra/features/mise:1": {},
-    "./.devcontainer/features/ble-sh": {
-      "ref": "v0.4.0",
-      "username": "vscode"
-    },
-    "./.devcontainer/features/bash-it": {
-      "ref": "master",
-      "username": "vscode"
-    }
-  },
+  "features": {},
   "customizations": {
     "vscode": {
-      "extensions": ["hverlin.mise-vscode"]
+      "extensions": ["hverlin.mise-vscode"],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/usr/bin/zsh"
+          }
+        }
+      }
     }
   },
-  "postCreateCommand": "sudo chown -R vscode:vscode /mnt/mise-data /home/vscode/.local/share/atuin || true"
+  "postCreateCommand": {
+    "mise-install": "bash .devcontainer/scripts/mise-install.sh",
+    "ssh-agent": "bash .devcontainer/scripts/setup-ssh-agent.sh"
+  },
+  "postStartCommand": {
+    "init-firewall": "sudo /usr/local/bin/init-firewall.sh"
+  },
+  "waitFor": "postStartCommand"
 }
+
